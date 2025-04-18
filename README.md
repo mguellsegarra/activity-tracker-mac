@@ -6,7 +6,7 @@ Inspired by [timeow](https://github.com/f-person/timeow-mac) 🙏
 
 ## 📷 Screenshot
 
-![Activity Tracker Screenshot](images/screenshot.png)
+<img src="images/screenshot.png" alt="Activity Tracker Screenshot" width="128">
 
 ## 🤔 Why Another Activity Tracker?
 
