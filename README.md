@@ -1,23 +1,30 @@
-# Activity Tracker for Mac OS
+# Activity Tracker for Mac
 
 A simple, focused system tray application that tracks your computer activity, built with Go. Created out of frustration with macOS's native Screen Time feature, which has proven to be unreliable and problematic.
 
-## Why Another Activity Tracker?
+Inspired by [timeow](https://github.com/f-person/timeow-mac) 🙏
+
+## 📷 Screenshot
+
+![Activity Tracker Screenshot](images/screenshot.png)
+
+## 🤔 Why Another Activity Tracker?
 
 This project exists because the native macOS Screen Time tracking is fundamentally broken - it often fails to track activity correctly, provides inconsistent data, and is overly complex. Instead of trying to do everything, this application does one thing and does it well: tracking your actual computer activity time accurately and reliably.
 
-## Features
+## ✨ Features
 
 - Lives quietly in your system tray
 - Monitors computer activity and idle time with precision
 - Built with native Go libraries for optimal performance
 - Simple by design - no bloat, no unnecessary features
 
-## Prerequisites
+## 🔧 Prerequisites
 
 - Go 1.22.2 or higher
+- macOS
 
-## Installation
+## 📥 Installation
 
 1. Clone the repository:
 ```bash
@@ -35,7 +42,7 @@ go mod download
 go build
 ```
 
-## Usage
+## 🚀 Usage
 
 Run the application:
 ```bash
@@ -44,7 +51,7 @@ Run the application:
 
 The application will appear in your system tray.
 
-## Adding to macOS Startup
+## ⚙️ Adding to macOS Startup
 
 To make the activity tracker start automatically when you log in to your Mac:
 
