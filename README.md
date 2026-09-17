@@ -1,104 +1,69 @@
-# Activity Tracker for Mac
+<p align="center">
+  <img src="Resources/AppIcon.png" width="112" alt="Activity Tracker app icon" />
+</p>
 
-<img src="Resources/AppIcon.png" alt="Activity Tracker app icon" width="128">
+<h1 align="center">Activity Tracker</h1>
 
-A small macOS menu-bar app that tracks your active computer time. Built with Go as a focused alternative to Screen Time.
+<p align="center">
+  A small macOS menu bar app that keeps today's active time visible at a glance.
+</p>
 
-Inspired by [timeow](https://github.com/f-person/timeow-mac) 🙏
+<p align="center">
+  <a href="https://support.apple.com/macos"><img src="https://img.shields.io/badge/macOS-13%2B-black?logo=apple" alt="macOS 13+" /></a>
+  <a href="https://go.dev/"><img src="https://img.shields.io/badge/Go-1.22.2%2B-00ADD8?logo=go&amp;logoColor=white" alt="Go 1.22.2+" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT" /></a>
+</p>
 
-## 📷 Screenshot
+Activity Tracker counts time while you use your Mac and pauses after one minute of inactivity. The total appears in the menu bar and resets when a new day starts. It stores the count locally; no account is needed.
 
-<img src="images/screenshot.png" alt="Activity Tracker Screenshot" width="128">
+<p align="center">
+  <img src="images/screenshot.png" width="256" alt="Activity Tracker showing today's active time in the macOS menu bar" />
+</p>
 
-## 🤔 Why Another Activity Tracker?
+## Features
 
-This project focuses on one thing: tracking computer activity time without the complexity of a full Screen Time dashboard.
+- Today's active time in the menu bar, shown in minutes or hours and minutes
+- Automatic pause after one minute of inactivity
+- Local persistence across app restarts
+- No Dock icon
 
-## ✨ Features
+Inspired by [timeow](https://github.com/f-person/timeow-mac).
 
-- Lives quietly in your menu bar
-- Monitors computer activity and idle time with precision
-- Built with native Go libraries for optimal performance
-- Simple by design - no bloat, no unnecessary features
+## Requirements
 
-## 📥 Install
+- macOS 13 Ventura or newer
+- Go 1.22.2 or newer to build from source
 
-Download the DMG from the [latest release](https://github.com/mguellsegarra/activity-tracker-mac/releases/latest), open it, and drag **Activity Tracker.app** to **Applications**. Launch the app from Applications; its counter appears in the menu bar.
+## Install
 
-The DMG is ad-hoc signed but **not notarized** by Apple. macOS may ask you to confirm that you want to open a downloaded app. Only install it if you trust this repository and the release you downloaded.
+Download the DMG from the [latest GitHub release](https://github.com/mguellsegarra/activity-tracker-mac/releases/latest), open it, and drag **Activity Tracker.app** to **Applications**. Launch it from Applications; the counter appears in the menu bar.
 
-Activity data is stored at `~/.config/activity_tracker/active_time` and is kept when upgrading the app.
+The downloadable app is ad-hoc signed but not Apple-notarized. macOS may ask you to confirm the first launch of a downloaded copy.
 
-## 🔧 Build from source
+To start Activity Tracker when you log in, add the installed app in **System Settings → General → Login Items & Extensions**. If you previously installed the Launch Agent from older instructions, unload or disable it first to avoid running two copies.
 
-- Go 1.22.2 or higher
-- macOS
-- ImageMagick (only to regenerate the icon or build the DMG)
+## Build from source
 
-1. Clone the repository:
-```bash
+```sh
 git clone https://github.com/mguellsegarra/activity-tracker-mac.git
 cd activity-tracker-mac
-```
-
-2. Install dependencies:
-```bash
-go mod download
-```
-
-3. Build the macOS app:
-```bash
 ./scripts/build-app.sh
-```
-
-The source icon is `Resources/AppIcon.png`; its bundled macOS version is
-`Resources/AppIcon.icns`. To regenerate the latter, run `./scripts/build-icon.sh`.
-
-To build a drag-to-Applications DMG:
-```bash
-./scripts/build-dmg.sh
-```
-
-The disk image is saved as `build/Activity-Tracker.dmg`.
-
-## 🚀 Usage
-
-Copy the built app to `/Applications`, then open it:
-```bash
 ditto "build/Activity Tracker.app" "/Applications/Activity Tracker.app"
 open "/Applications/Activity Tracker.app"
 ```
 
-The application will appear in your menu bar.
+Quit any running copy before replacing it. On macOS 27, running the app from `/Applications` helps menu bar managers such as Bartender recognize it; `go run .` is still available for development.
 
-For development without an app bundle, `go run .` still works, but menu bar managers
-on macOS 27 may not recognize an executable launched outside `/Applications`.
+The source icon is `Resources/AppIcon.png`, and the bundled icon is `Resources/AppIcon.icns`. To regenerate the bundled icon, install ImageMagick and run `./scripts/build-icon.sh`. To build the drag-to-Applications DMG, run `./scripts/build-dmg.sh`; it writes `build/Activity-Tracker.dmg`.
 
-## ⚙️ Adding to macOS Startup
+## Data and privacy
 
-To start the installed app automatically, add **Activity Tracker.app** in System
-Settings → General → Login Items & Extensions. If you previously installed the
-Launch Agent from older instructions, unload or disable it first so two copies
-do not track and write the same activity file.
+Activity Tracker stores its count in `~/.config/activity_tracker/active_time`. This file remains in place when you replace the app with a newer version. The app does not require an account or cloud service.
 
-## 🤝 Contributing
+## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions and bug reports are welcome through GitHub issues and pull requests.
 
-If you find this extension useful, please consider:
+## License
 
-- ⭐ Starring the repository
-- 🐛 Reporting any bugs you find
-- 💡 Suggesting new features
-
-## 📄 License
-
-This project is licensed under the [**MIT License**](https://github.com/mguellsegarra/activity-tracker-mac/blob/main/LICENSE).
-
-## 👋 Author
-
-I'm Marc Güell Segarra, a freelance software developer at [Ondori.dev](https://ondori.dev).
-
-## ☕ Buy Me a Coffee
-
-If you found this extension useful, consider **[buying me a coffee](https://buymeacoffee.com/mguellsegarra)!**
+[MIT](LICENSE) © Marc Güell Segarra. More about the author at [Ondori.dev](https://ondori.dev). If you find the app useful, you can [buy me a coffee](https://buymeacoffee.com/mguellsegarra).
