@@ -1,6 +1,8 @@
 # Activity Tracker for Mac
 
-A simple, focused system tray application that tracks your computer activity, built with Go. Created out of frustration with macOS's native Screen Time feature, which has proven to be unreliable and problematic.
+<img src="Resources/AppIcon.png" alt="Activity Tracker app icon" width="128">
+
+A small macOS menu-bar app that tracks your active computer time. Built with Go as a focused alternative to Screen Time.
 
 Inspired by [timeow](https://github.com/f-person/timeow-mac) 🙏
 
@@ -10,26 +12,33 @@ Inspired by [timeow](https://github.com/f-person/timeow-mac) 🙏
 
 ## 🤔 Why Another Activity Tracker?
 
-This project exists because the native macOS Screen Time tracking is fundamentally broken - it often fails to track activity correctly, provides inconsistent data, and is overly complex. Instead of trying to do everything, this application does one thing and does it well: tracking your actual computer activity time accurately and reliably.
+This project focuses on one thing: tracking computer activity time without the complexity of a full Screen Time dashboard.
 
 ## ✨ Features
 
-- Lives quietly in your system tray
+- Lives quietly in your menu bar
 - Monitors computer activity and idle time with precision
 - Built with native Go libraries for optimal performance
 - Simple by design - no bloat, no unnecessary features
 
-## 🔧 Prerequisites
+## 📥 Install
+
+Download the DMG from the [latest release](https://github.com/mguellsegarra/activity-tracker-mac/releases/latest), open it, and drag **Activity Tracker.app** to **Applications**. Launch the app from Applications; its counter appears in the menu bar.
+
+The DMG is ad-hoc signed but **not notarized** by Apple. macOS may ask you to confirm that you want to open a downloaded app. Only install it if you trust this repository and the release you downloaded.
+
+Activity data is stored at `~/.config/activity_tracker/active_time` and is kept when upgrading the app.
+
+## 🔧 Build from source
 
 - Go 1.22.2 or higher
 - macOS
-
-## 📥 Installation
+- ImageMagick (only to regenerate the icon or build the DMG)
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/activity_tracker.git
-cd activity_tracker
+git clone https://github.com/mguellsegarra/activity-tracker-mac.git
+cd activity-tracker-mac
 ```
 
 2. Install dependencies:
@@ -37,61 +46,40 @@ cd activity_tracker
 go mod download
 ```
 
-3. Build the application:
+3. Build the macOS app:
 ```bash
-go build
+./scripts/build-app.sh
 ```
+
+The source icon is `Resources/AppIcon.png`; its bundled macOS version is
+`Resources/AppIcon.icns`. To regenerate the latter, run `./scripts/build-icon.sh`.
+
+To build a drag-to-Applications DMG:
+```bash
+./scripts/build-dmg.sh
+```
+
+The disk image is saved as `build/Activity-Tracker.dmg`.
 
 ## 🚀 Usage
 
-Run the application:
+Copy the built app to `/Applications`, then open it:
 ```bash
-./activity_tracker
+ditto "build/Activity Tracker.app" "/Applications/Activity Tracker.app"
+open "/Applications/Activity Tracker.app"
 ```
 
-The application will appear in your system tray.
+The application will appear in your menu bar.
+
+For development without an app bundle, `go run .` still works, but menu bar managers
+on macOS 27 may not recognize an executable launched outside `/Applications`.
 
 ## ⚙️ Adding to macOS Startup
 
-To make the activity tracker start automatically when you log in to your Mac:
-
-1. Create a Launch Agent:
-   ```bash
-   mkdir -p ~/Library/LaunchAgents
-   ```
-
-2. Create a new file named `com.user.activity_tracker.plist` in the LaunchAgents directory with the following content (replace the path with your actual build path):
-   ```xml
-   <?xml version="1.0" encoding="UTF-8"?>
-   <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-   <plist version="1.0">
-   <dict>
-       <key>Label</key>
-       <string>com.user.activity_tracker</string>
-       <key>ProgramArguments</key>
-       <array>
-           <string>/path/to/your/activity_tracker</string>
-       </array>
-       <key>RunAtLoad</key>
-       <true/>
-       <key>KeepAlive</key>
-       <true/>
-   </dict>
-   </plist>
-   ```
-
-3. Load the Launch Agent:
-   ```bash
-   launchctl load ~/Library/LaunchAgents/com.user.activity_tracker.plist
-   ```
-
-Alternatively, you can also add the application to your Login Items:
-
-1. Open System Settings
-2. Go to General > Login Items
-3. Click the '+' button
-4. Navigate to and select your activity_tracker executable
-5. The application will now start automatically when you log in
+To start the installed app automatically, add **Activity Tracker.app** in System
+Settings → General → Login Items & Extensions. If you previously installed the
+Launch Agent from older instructions, unload or disable it first so two copies
+do not track and write the same activity file.
 
 ## 🤝 Contributing
 
